@@ -1,5 +1,6 @@
 package com.projects.my.shareMidi_api.model;
 
+import com.projects.my.shareMidi_api.dto.AtualizarCategoriaDto;
 import com.projects.my.shareMidi_api.dto.CriarCategoriaDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,5 +28,14 @@ public class Categoria {
     public Categoria(CriarCategoriaDto dto){
         this.titulo = dto.titulo();
         this.cor = dto.cor();
+    }
+
+    public void atualizar(AtualizarCategoriaDto dto){
+        if (dto.titulo() != null){
+            this.titulo = dto.titulo();
+        }
+        if (dto.cor() != null){
+            this.cor = dto.cor();
+        }
     }
 }

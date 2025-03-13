@@ -1,5 +1,6 @@
 package com.projects.my.shareMidi_api.service;
 
+import com.projects.my.shareMidi_api.dto.AtualizarCategoriaDto;
 import com.projects.my.shareMidi_api.dto.CriarCategoriaDto;
 import com.projects.my.shareMidi_api.dto.DetalharCategoriaDto;
 import com.projects.my.shareMidi_api.model.Categoria;
@@ -40,8 +41,19 @@ public class CategoriaService {
 
     }
 
-    public Categoria criarCategoria(@Valid CriarCategoriaDto dto) {
+    public Categoria criarCategoria(CriarCategoriaDto dto) {
         Categoria categoria = new Categoria(dto);
+        categoriaRepository.save(categoria);
+
+        return categoria;
+
+    }
+
+    public Categoria atualizarCategoria(Long id, AtualizarCategoriaDto dto){
+        var categoria = categoriaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Não foi encontrada categoria com ID: " + id));
+
+        categoria.atualizar(dto);
         categoriaRepository.save(categoria);
 
         return categoria;

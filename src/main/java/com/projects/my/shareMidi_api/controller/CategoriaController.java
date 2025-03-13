@@ -1,5 +1,6 @@
 package com.projects.my.shareMidi_api.controller;
 
+import com.projects.my.shareMidi_api.dto.AtualizarCategoriaDto;
 import com.projects.my.shareMidi_api.dto.CriarCategoriaDto;
 import com.projects.my.shareMidi_api.dto.DetalharCategoriaDto;
 import com.projects.my.shareMidi_api.service.CategoriaService;
@@ -44,5 +45,12 @@ public class CategoriaController {
 
         return ResponseEntity.created(uri).body(new DetalharCategoriaDto(categoria));
 
+    }
+
+    @PutMapping
+    public ResponseEntity<DetalharCategoriaDto> atualizarCategoria(@PathVariable Long id, @RequestBody @Valid AtualizarCategoriaDto dto){
+        var categoria = categoriaService.atualizarCategoria(id, dto);
+
+        return ResponseEntity.ok(new DetalharCategoriaDto(categoria));
     }
 }

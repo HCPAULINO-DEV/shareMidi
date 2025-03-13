@@ -38,7 +38,7 @@ public class VideoController {
 
     }
 
-    @PostMapping("/cadastrar")
+    @PostMapping
     public ResponseEntity<DetalharVideoDto> criarVideo(@RequestBody @Valid CriarVideoDto dto, UriComponentsBuilder uriComponentsBuilder) {
         var video = videoService.criarVideo(dto);
         var uri = uriComponentsBuilder.path("/videos/{id}").buildAndExpand(video.getId()).toUri();

@@ -1,6 +1,7 @@
 package com.projects.my.shareMidi_api.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record CriarVideoDto(
         @NotBlank(message = "Título obrigatório")
@@ -10,6 +11,9 @@ public record CriarVideoDto(
         String descricao,
 
         @NotBlank(message = "URL obrigatório")
-        String url
+        String url,
+
+        @NotNull(message = "Categoria obrigatória")
+        Long categoria
 ) {
 }

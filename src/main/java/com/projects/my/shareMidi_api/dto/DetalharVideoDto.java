@@ -6,9 +6,10 @@ public record DetalharVideoDto(
         Long id,
         String titulo,
         String descricao,
-        String url
+        String url,
+        String categoria
 ) {
     public DetalharVideoDto(Video video){
-        this(video.getId(), video.getTitulo(), video.getDescricao(), video.getUrl());
+        this(video.getId(), video.getTitulo(), video.getDescricao(), video.getUrl(), video.getCategoria().getTitulo());
     }
 }

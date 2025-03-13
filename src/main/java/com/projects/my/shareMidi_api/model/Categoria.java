@@ -8,6 +8,9 @@ import lombok.Data;
 import lombok.Generated;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "categoria")
 @NoArgsConstructor
@@ -24,6 +27,9 @@ public class Categoria {
 
     @Column(nullable = false)
     private String cor;
+
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Video> videos = new ArrayList<>();
 
     public Categoria(CriarCategoriaDto dto){
         this.titulo = dto.titulo();

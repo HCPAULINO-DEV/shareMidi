@@ -27,14 +27,19 @@ public class Video {
     @Column(nullable = false)
     private String url;
 
-    public Video(CriarVideoDto dtoCriar){
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", nullable = false)
+    private Categoria categoria;
+
+    public Video(CriarVideoDto dtoCriar, Categoria categoria){
         this.titulo = dtoCriar.titulo();
         this.descricao = dtoCriar.descricao();
         this.url = dtoCriar.url();
+        this.categoria = categoria;
 
     }
 
-    public void atualizar(AtualizarVideoDto dto){
+    public void atualizar(AtualizarVideoDto dto, Categoria categoria){
         if (dto.titulo() != null){
             this.titulo = dto.titulo();
         }
@@ -43,6 +48,9 @@ public class Video {
         }
         if (dto.url() != null){
             this.url = dto.url();
+        }
+        if (dto.categoria() != null){
+            this.categoria = categoria;
         }
     }
 

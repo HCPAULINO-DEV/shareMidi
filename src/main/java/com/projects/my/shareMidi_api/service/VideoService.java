@@ -3,7 +3,9 @@ package com.projects.my.shareMidi_api.service;
 import com.projects.my.shareMidi_api.dto.AtualizarVideoDto;
 import com.projects.my.shareMidi_api.dto.CriarVideoDto;
 import com.projects.my.shareMidi_api.dto.DetalharVideoDto;
+import com.projects.my.shareMidi_api.model.Categoria;
 import com.projects.my.shareMidi_api.model.Video;
+import com.projects.my.shareMidi_api.repository.CategoriaRepository;
 import com.projects.my.shareMidi_api.repository.VideoRepository;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -14,9 +16,11 @@ import org.springframework.stereotype.Service;
 public class VideoService {
 
     private final VideoRepository videoRepository;
+    private final CategoriaService categoriaService;
 
-    public VideoService(VideoRepository videoRepository) {
+    public VideoService(VideoRepository videoRepository, CategoriaService categoriaService) {
         this.videoRepository = videoRepository;
+        this.categoriaService = categoriaService;
     }
 
     public Page<DetalharVideoDto> exibirVideos(Pageable pageable){
@@ -31,8 +35,9 @@ public class VideoService {
 
     }
 
-    public Video criarVideo(@Valid CriarVideoDto dto) {
-        Video video = new Video(dto);
+    public Video criarVideo(CriarVideoDto dto) {
+        Categoria categoria = categoriaService.buscarCategoria(dto.categoria());
+        Video video = new Video(dto, categoria);
         videoRepository.save(video);
 
         return video;
@@ -41,7 +46,8 @@ public class VideoService {
 
     public Video atualizarVideo(Long id, AtualizarVideoDto dto) {
         var video = buscarVideo(id);
-        video.atualizar(dto);
+        Categoria categoria = categoriaService.buscarCategoria(dto.categoria());
+        video.atualizar(dto, categoria);
         videoRepository.save(video);
 
         return video;
@@ -50,7 +56,6 @@ public class VideoService {
 
     public void deletarVideo(Long id){
         var video = buscarVideo(id);
-
         videoRepository.delete(video);
 
     }

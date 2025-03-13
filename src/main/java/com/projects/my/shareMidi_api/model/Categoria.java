@@ -1,5 +1,6 @@
 package com.projects.my.shareMidi_api.model;
 
+import com.projects.my.shareMidi_api.dto.CriarCategoriaDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,4 +23,9 @@ public class Categoria {
 
     @Column(nullable = false)
     private String cor;
+
+    public Categoria(CriarCategoriaDto dto){
+        this.titulo = dto.titulo();
+        this.cor = dto.cor();
+    }
 }

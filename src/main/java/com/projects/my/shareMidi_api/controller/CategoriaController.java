@@ -3,10 +3,14 @@ package com.projects.my.shareMidi_api.controller;
 import com.projects.my.shareMidi_api.dto.AtualizarCategoriaDto;
 import com.projects.my.shareMidi_api.dto.CriarCategoriaDto;
 import com.projects.my.shareMidi_api.dto.DetalharCategoriaDto;
+import com.projects.my.shareMidi_api.dto.DetalharVideoDto;
+import com.projects.my.shareMidi_api.model.Categoria;
 import com.projects.my.shareMidi_api.service.CategoriaService;
+import com.projects.my.shareMidi_api.service.VideoService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -16,13 +20,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class CategoriaController {
 
     private final CategoriaService categoriaService;
+    private final VideoService videoService;
 
-    public CategoriaController(CategoriaService categoriaService) {
+    public CategoriaController(CategoriaService categoriaService, VideoService videoService) {
         this.categoriaService = categoriaService;
+        this.videoService = videoService;
     }
 
     @GetMapping
-    public ResponseEntity<Page<DetalharCategoriaDto>> exibirCategorias(Pageable pageable){
+    public ResponseEntity<Page<DetalharCategoriaDto>> exibirCategorias(@PageableDefault(sort = "id", size = 10) Pageable pageable){
         var categorias = categoriaService.exibirCategorias(pageable);
 
         return ResponseEntity.ok(categorias);
@@ -34,6 +40,14 @@ public class CategoriaController {
         var categoria = categoriaService.exibirUnicaCategoria(id);
 
         return ResponseEntity.ok(new DetalharCategoriaDto(categoria));
+
+    }
+
+    @GetMapping("/{id}/videos")
+    public ResponseEntity<Page<DetalharVideoDto>> exibirVideosPorCategoria(Categoria categoria, @PageableDefault(sort = "id", size = 10) Pageable pageable){
+        var videos = videoService.exibirVideoPorCategoria(categoria, pageable);
+
+        return ResponseEntity.ok(videos);
 
     }
 

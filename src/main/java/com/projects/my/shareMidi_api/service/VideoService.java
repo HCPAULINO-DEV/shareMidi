@@ -35,6 +35,11 @@ public class VideoService {
 
     }
 
+    public Page<DetalharVideoDto> exibirVideoPorCategoria(Categoria categoria, Pageable pageable){
+        return videoRepository.findByCategoria(categoria, pageable).map(DetalharVideoDto::new);
+
+    }
+
     public Video criarVideo(CriarVideoDto dto) {
         Categoria categoria = categoriaService.buscarCategoria(dto.categoria());
         Video video = new Video(dto, categoria);

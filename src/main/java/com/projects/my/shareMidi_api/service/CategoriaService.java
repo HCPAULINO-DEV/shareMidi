@@ -30,4 +30,12 @@ public class CategoriaService {
 
     }
 
+    public Categoria exibirUnicaCategoria(Long id) {
+        var categoria = categoriaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Não foi encontrada categoria com ID: " + id));
+
+        return categoria;
+
+    }
+
 }

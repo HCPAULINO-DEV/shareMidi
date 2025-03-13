@@ -47,10 +47,19 @@ public class CategoriaController {
 
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<DetalharCategoriaDto> atualizarCategoria(@PathVariable Long id, @RequestBody @Valid AtualizarCategoriaDto dto){
         var categoria = categoriaService.atualizarCategoria(id, dto);
 
         return ResponseEntity.ok(new DetalharCategoriaDto(categoria));
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarCategoria(@PathVariable Long id){
+        categoriaService.deletarCategoria(id);
+
+        return ResponseEntity.noContent().build();
+
     }
 }

@@ -20,21 +20,12 @@ public class VideoService {
     }
 
     public Page<DetalharVideoDto> exibirVideos(Pageable pageable){
-        Page<Video> page = videoRepository.findAll(pageable);
-
-        if (page.isEmpty()){
-            throw new RuntimeException("Nenhum vídeo foi encontrado");
-        }
-
-        Page<DetalharVideoDto> dto = page.map(DetalharVideoDto::new);
-
-        return dto;
+        return videoRepository.findAll(pageable).map(DetalharVideoDto::new);
 
     }
 
     public Video exibirUnicoVideo(Long id){
-        var video = videoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vídeo não encontrado pelo ID: " + id));
+        var video = buscarVideo(id);
 
         return video;
 
@@ -49,9 +40,7 @@ public class VideoService {
     }
 
     public Video atualizarVideo(Long id, AtualizarVideoDto dto) {
-        var video = videoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vídeo não encontrado pelo ID: " + id));
-
+        var video = buscarVideo(id);
         video.atualizar(dto);
         videoRepository.save(video);
 
@@ -60,10 +49,18 @@ public class VideoService {
     }
 
     public void deletarVideo(Long id){
-        var video = videoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vídeo não encontrado pelo ID: " + id));
+        var video = buscarVideo(id);
 
         videoRepository.delete(video);
+
+    }
+
+    //MÉTODO AUXILIAR
+    public Video buscarVideo(Long id){
+        var usuario = videoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vídeo não encontrado pelo ID: " + id));
+
+        return usuario;
 
     }
 }

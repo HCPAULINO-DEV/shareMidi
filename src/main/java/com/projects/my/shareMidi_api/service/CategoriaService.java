@@ -21,21 +21,13 @@ public class CategoriaService {
     }
 
     public Page<DetalharCategoriaDto> exibirCategorias(Pageable pageable) {
-        Page<Categoria> videos = categoriaRepository.findAll(pageable);
-
-        if (videos.isEmpty()){
-            throw new RuntimeException("Nenhuma categoria foi encontrada");
-        }
-
-        Page<DetalharCategoriaDto> pageDto = videos.map(DetalharCategoriaDto::new);
-
-        return pageDto;
+        return categoriaRepository.findAll(pageable)
+                .map(DetalharCategoriaDto::new);
 
     }
 
     public Categoria exibirUnicaCategoria(Long id) {
-        var categoria = categoriaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Não foi encontrada categoria com ID: " + id));
+        var categoria = buscarCategoria(id);
 
         return categoria;
 
@@ -50,13 +42,25 @@ public class CategoriaService {
     }
 
     public Categoria atualizarCategoria(Long id, AtualizarCategoriaDto dto){
-        var categoria = categoriaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Não foi encontrada categoria com ID: " + id));
-
+        var categoria = buscarCategoria(id);
         categoria.atualizar(dto);
         categoriaRepository.save(categoria);
 
         return categoria;
 
+    }
+
+    public void deletarCategoria(Long id) {
+        var categoria = buscarCategoria(id);
+        categoriaRepository.delete(categoria);
+
+    }
+
+    //MÉTODO AUXILIAR
+    public Categoria buscarCategoria(Long id){
+        var categoria = categoriaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Não foi encontrada categoria com ID: " + id));
+
+        return categoria;
     }
 }

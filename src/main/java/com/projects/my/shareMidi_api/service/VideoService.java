@@ -45,7 +45,14 @@ public class VideoService {
     }
 
     public Video criarVideo(CriarVideoDto dto) {
-        Categoria categoria = categoriaService.buscarCategoria(dto.categoria());
+        Categoria categoria;
+
+        if (dto.categoria() == null || dto.categoria().equals("")){
+            categoria = categoriaService.buscarCategoria(1L);
+        } else{
+            categoria = categoriaService.buscarCategoria(dto.categoria());
+        }
+
         Video video = new Video(dto, categoria);
         videoRepository.save(video);
 

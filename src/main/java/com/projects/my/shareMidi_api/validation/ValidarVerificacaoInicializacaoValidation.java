@@ -1,15 +1,15 @@
-package com.projects.my.shareMidi_api.validations;
+package com.projects.my.shareMidi_api.validation;
 
 import com.projects.my.shareMidi_api.service.CategoriaService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class VerificacaoInicializacaoValidation implements CommandLineRunner {
+public class ValidarVerificacaoInicializacaoValidation implements CommandLineRunner {
 
     private final CategoriaService categoriaService;
 
-    public VerificacaoInicializacaoValidation(CategoriaService categoriaService) {
+    public ValidarVerificacaoInicializacaoValidation(CategoriaService categoriaService) {
         this.categoriaService = categoriaService;
     }
 

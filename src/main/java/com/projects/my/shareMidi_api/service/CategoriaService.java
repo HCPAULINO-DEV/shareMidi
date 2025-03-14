@@ -5,17 +5,22 @@ import com.projects.my.shareMidi_api.dto.CriarCategoriaDto;
 import com.projects.my.shareMidi_api.dto.DetalharCategoriaDto;
 import com.projects.my.shareMidi_api.model.Categoria;
 import com.projects.my.shareMidi_api.repository.CategoriaRepository;
+import com.projects.my.shareMidi_api.validation.CategoriaValidation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CategoriaService {
 
     private final CategoriaRepository categoriaRepository;
+    private final List<CategoriaValidation> validation;
 
-    public CategoriaService(CategoriaRepository categoriaRepository) {
+    public CategoriaService(CategoriaRepository categoriaRepository, List<CategoriaValidation> validation) {
         this.categoriaRepository = categoriaRepository;
+        this.validation = validation;
     }
 
     public Page<DetalharCategoriaDto> exibirCategorias(Pageable pageable) {
@@ -32,6 +37,7 @@ public class CategoriaService {
     }
 
     public Categoria criarCategoria(CriarCategoriaDto dto) {
+        validation.forEach(v -> v.validar(dto));
         Categoria categoria = new Categoria(dto);
         categoriaRepository.save(categoria);
 

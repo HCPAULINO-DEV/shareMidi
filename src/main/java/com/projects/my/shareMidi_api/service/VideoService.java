@@ -23,7 +23,11 @@ public class VideoService {
         this.categoriaService = categoriaService;
     }
 
-    public Page<DetalharVideoDto> exibirVideos(Pageable pageable){
+    public Page<DetalharVideoDto> exibirVideos(Pageable pageable, String titulo){
+        if (titulo != null) {
+            return videoRepository.findByTitulo(titulo, pageable).map(DetalharVideoDto::new);
+        }
+
         return videoRepository.findAll(pageable).map(DetalharVideoDto::new);
 
     }

@@ -23,8 +23,8 @@ public class VideoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DetalharVideoDto>> exibirVideos(@PageableDefault(sort = "id", size = 10) Pageable pageable) {
-        var videos = videoService.exibirVideos(pageable);
+    public ResponseEntity<Page<DetalharVideoDto>> exibirVideos(@PageableDefault(sort = "id", size = 10) Pageable pageable, @RequestParam(required = false, name = "search") String titulo) {
+        var videos = videoService.exibirVideos(pageable, titulo);
 
         return ResponseEntity.ok(videos);
 

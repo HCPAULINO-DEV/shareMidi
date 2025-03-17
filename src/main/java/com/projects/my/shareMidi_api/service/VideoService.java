@@ -79,7 +79,7 @@ public class VideoService {
     //MÉTODO AUXILIAR
     public Video buscarVideo(Long id){
         var usuario = videoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vídeo não encontrado pelo ID: " + id));
+                .orElseThrow(() -> new RuntimeException("Vídeo não encontrado com ID: " + id));
 
         return usuario;
 

@@ -14,4 +14,6 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
     @Query("SELECT v FROM Video v WHERE LOWER(v.titulo) LIKE LOWER(CONCAT('%', :titulo, '%'))")
     Page<Video> findByTitulo(@Param("titulo") String titulo, Pageable pageable);
 
+    Boolean existsByTitulo(String titulo);
+
 }

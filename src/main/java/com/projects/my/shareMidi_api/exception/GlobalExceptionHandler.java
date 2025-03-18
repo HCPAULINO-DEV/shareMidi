@@ -17,6 +17,7 @@ public class GlobalExceptionHandler {
                 e.getMessage()                 // Mensagem da exceção
         );
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception);
+
     }
 
     @ExceptionHandler(CategoriaJaExistenteException.class)
@@ -27,6 +28,30 @@ public class GlobalExceptionHandler {
                 e.getMessage()                   // Mensagem da exceção
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception);
+
+    }
+
+
+    @ExceptionHandler(VideoNaoEncontradoException.class)
+    public ResponseEntity<ExceptionDto> handlerVideoNaoEncontrado(VideoNaoEncontradoException e){
+        var exception = new ExceptionDto(
+                HttpStatus.NOT_FOUND.value(),
+                "NOT_FOUND",
+                e.getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception);
+
+    }
+
+    @ExceptionHandler(VideoJaExistenteException.class)
+    public ResponseEntity<ExceptionDto> handlerVideoJaExistente(VideoJaExistenteException e) {
+        var exception = new ExceptionDto(
+                HttpStatus.BAD_REQUEST.value(),  // Código numérico 400
+                "BAD_REQUEST",                   // Tipo de erro
+                e.getMessage()                   // Mensagem da exceção
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception);
+
     }
 
     // Catch-all handler for other exceptions
@@ -38,7 +63,9 @@ public class GlobalExceptionHandler {
                 "Ocorreu um erro interno no servidor."      // Mensagem genérica para erro interno
         );
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception);
+
     }
 
     public record ExceptionDto(int errorCode, String error, String message) {}
+
 }

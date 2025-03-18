@@ -4,6 +4,6 @@
 
     public interface CategoriaValidation {
 
-        public void validar(Object dto);
+        public void validar(Object object);
 
     }

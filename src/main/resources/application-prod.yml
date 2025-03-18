@@ -1,0 +1,17 @@
+
+
+spring:
+  application:
+    name: adopet_api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shareMidi
+    username: postgres
+    password: postgress
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: false
+

@@ -2,7 +2,7 @@
 
 spring:
   application:
-    name: adopet_api
+    name: shareMidi_api
 
   datasource:
     url: jdbc:postgresql://localhost:5432/shareMidi

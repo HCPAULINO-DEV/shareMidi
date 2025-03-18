@@ -30,7 +30,6 @@ public class CategoriaController {
     @GetMapping
     public ResponseEntity<Page<DetalharCategoriaDto>> exibirCategorias(@PageableDefault(sort = "id", size = 10) Pageable pageable){
         var categorias = categoriaService.exibirCategorias(pageable);
-
         return ResponseEntity.ok(categorias);
 
     }
@@ -44,7 +43,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/{id}/videos")
-    public ResponseEntity<Page<DetalharVideoDto>> exibirVideosPorCategoria(Categoria categoria, @PageableDefault(sort = "id", size = 10) Pageable pageable){
+    public ResponseEntity<Page<DetalharVideoDto>> exibirVideosPorCategoria(@PathVariable Categoria categoria, @PageableDefault(sort = "id", size = 10) Pageable pageable){
         var videos = videoService.exibirVideoPorCategoria(categoria, pageable);
 
         return ResponseEntity.ok(videos);

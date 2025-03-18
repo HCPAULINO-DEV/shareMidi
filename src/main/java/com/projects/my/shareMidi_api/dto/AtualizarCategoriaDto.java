@@ -6,6 +6,7 @@ public record AtualizarCategoriaDto(
         @NotBlank(message = "Título obrigatório")
         String titulo,
 
+        @NotBlank(message = "Cor obrigatório")
         String cor
 ) {
 }

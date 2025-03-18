@@ -31,6 +31,16 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(CategoriaNaoPermiteExclusaoException.class)
+    public ResponseEntity<ExceptionDto> handlerCategoriaNaoPermiteExclusao(CategoriaNaoPermiteExclusaoException e) {
+        var exception = new ExceptionDto(
+                HttpStatus.BAD_REQUEST.value(),  // Código numérico 400
+                "BAD_REQUEST",                   // Tipo de erro
+                e.getMessage()                   // Mensagem da exceção
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception);
+
+    }
 
     @ExceptionHandler(VideoNaoEncontradoException.class)
     public ResponseEntity<ExceptionDto> handlerVideoNaoEncontrado(VideoNaoEncontradoException e){

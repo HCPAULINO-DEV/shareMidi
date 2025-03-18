@@ -4,6 +4,7 @@ import com.projects.my.shareMidi_api.dto.AtualizarCategoriaDto;
 import com.projects.my.shareMidi_api.dto.CriarCategoriaDto;
 import com.projects.my.shareMidi_api.dto.DetalharCategoriaDto;
 import com.projects.my.shareMidi_api.exception.CategoriaNaoEncontradaException;
+import com.projects.my.shareMidi_api.exception.CategoriaNaoPermiteExclusaoException;
 import com.projects.my.shareMidi_api.model.Categoria;
 import com.projects.my.shareMidi_api.repository.CategoriaRepository;
 import com.projects.my.shareMidi_api.validation.CategoriaValidation;
@@ -42,7 +43,7 @@ public class CategoriaService {
 
     }
 
-    public Categoria atualizarCategoria(Long id, AtualizarCategoriaDto dto){
+    public Categoria atualizarCategoria(Long id, AtualizarCategoriaDto dto) {
         validation.forEach(v -> v.validar(dto));
         var categoria = buscarCategoria(id);
         categoria.atualizar(dto);
@@ -51,13 +52,17 @@ public class CategoriaService {
     }
 
     public void deletarCategoria(Long id) {
-        var categoria = buscarCategoria(id);
-        categoriaRepository.delete(categoria);
+        if (id.equals(1L)) {
+            throw new CategoriaNaoPermiteExclusaoException("Não é permitido excluir a categoria LIVRE");
+        } else {
+            var categoria = buscarCategoria(id);
+            categoriaRepository.delete(categoria);
+        }
 
     }
 
     //MÉTODO AUXILIAR
-    public Categoria buscarCategoria(Long id){
+    public Categoria buscarCategoria(Long id) {
         return categoriaRepository.findById(id)
                 .orElseThrow(() -> new CategoriaNaoEncontradaException("Não foi encontrada categoria com ID: " + id));
 

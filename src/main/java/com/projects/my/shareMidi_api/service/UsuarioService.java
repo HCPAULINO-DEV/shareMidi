@@ -19,9 +19,8 @@ public class UsuarioService {
 
     public Usuario criarUsuario(CriarUsuarioDto dto){
         Usuario usuario = new Usuario(dto, passwordEncoder);
-        usuarioRepository.save(usuario);
+         return usuarioRepository.save(usuario);
 
-        return usuario;
 
     }
 

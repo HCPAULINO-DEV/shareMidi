@@ -1,7 +1,5 @@
 package com.projects.my.shareMidi_api.service;
 
-import com.projects.my.shareMidi_api.dto.CriarVideoDto;
-import com.projects.my.shareMidi_api.model.Categoria;
 import com.projects.my.shareMidi_api.model.Video;
 import com.projects.my.shareMidi_api.repository.VideoRepository;
 import org.junit.jupiter.api.Assertions;
@@ -11,8 +9,6 @@ import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Pageable;
-import org.springframework.util.Assert;
 
 import java.util.Optional;
 

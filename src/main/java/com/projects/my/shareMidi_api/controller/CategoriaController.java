@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -30,6 +31,7 @@ public class CategoriaController {
     @GetMapping
     public ResponseEntity<Page<DetalharCategoriaDto>> exibirCategorias(@PageableDefault(sort = "id", size = 10) Pageable pageable){
         var categorias = categoriaService.exibirCategorias(pageable);
+
         return ResponseEntity.ok(categorias);
 
     }
@@ -50,6 +52,7 @@ public class CategoriaController {
 
     }
 
+    @Transactional
     @PostMapping
     public ResponseEntity<DetalharCategoriaDto> criarCategoria(@RequestBody @Valid CriarCategoriaDto dto, UriComponentsBuilder uriComponentsBuilder){
         var categoria = categoriaService.criarCategoria(dto);
@@ -59,6 +62,7 @@ public class CategoriaController {
 
     }
 
+    @Transactional
     @PutMapping("/{id}")
     public ResponseEntity<DetalharCategoriaDto> atualizarCategoria(@PathVariable Long id, @RequestBody @Valid AtualizarCategoriaDto dto){
         var categoria = categoriaService.atualizarCategoria(id, dto);
@@ -67,6 +71,7 @@ public class CategoriaController {
 
     }
 
+    @Transactional
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarCategoria(@PathVariable Long id){
         categoriaService.deletarCategoria(id);

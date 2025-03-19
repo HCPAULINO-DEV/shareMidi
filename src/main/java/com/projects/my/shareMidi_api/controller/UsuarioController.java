@@ -6,6 +6,7 @@ import com.projects.my.shareMidi_api.repository.UsuarioRepository;
 import com.projects.my.shareMidi_api.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -21,6 +22,7 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
+    @Transactional
     @PostMapping
     public ResponseEntity<DetalharUsuarioDto> criarUsuario(@RequestBody @Valid CriarUsuarioDto dto, UriComponentsBuilder uriComponentsBuilder){
         var usuario = usuarioService.criarUsuario(dto);
@@ -30,6 +32,7 @@ public class UsuarioController {
 
     }
 
+    @Transactional
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarUsuario(@PathVariable Long id){
         usuarioService.deletarUsuario(id);

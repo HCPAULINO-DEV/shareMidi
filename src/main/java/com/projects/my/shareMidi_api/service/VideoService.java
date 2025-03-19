@@ -40,9 +40,7 @@ public class VideoService {
     }
 
     public Video exibirUnicoVideo(Long id){
-        var video = buscarVideo(id);
-
-        return video;
+        return buscarVideo(id);
 
     }
 
@@ -55,6 +53,8 @@ public class VideoService {
         validation.forEach(v -> v.validar(dto));
         Categoria categoria;
 
+
+        //VALIDAÇÃO - Se categoria for nula, setar categoria padrão ID: 1
         if (dto.categoria() == null || dto.categoria().equals("")){
             categoria = categoriaService.buscarCategoria(1L);
         } else{
@@ -62,9 +62,7 @@ public class VideoService {
         }
 
         Video video = new Video(dto, categoria);
-        videoRepository.save(video);
-
-        return video;
+        return videoRepository.save(video);
 
     }
 
@@ -73,6 +71,7 @@ public class VideoService {
         var video = buscarVideo(id);
         Categoria categoria;
 
+        //VALIDAÇÃO - Se categoria for nula, setar categoria padrão ID: 1
         if (dto.categoria() == null || dto.categoria().equals("")){
             categoria = categoriaService.buscarCategoria(1L);
         } else{
@@ -80,9 +79,7 @@ public class VideoService {
         }
 
         video.atualizar(dto, categoria);
-        videoRepository.save(video);
-
-        return video;
+        return videoRepository.save(video);
 
     }
 
@@ -94,10 +91,9 @@ public class VideoService {
 
     //MÉTODO AUXILIAR
     public Video buscarVideo(Long id){
-        var usuario = videoRepository.findById(id)
+        return videoRepository.findById(id)
                 .orElseThrow(() -> new VideoNaoEncontradoException("Vídeo não encontrado com ID: " + id));
 
-        return usuario;
-
     }
+
 }

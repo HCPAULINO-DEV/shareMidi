@@ -27,8 +27,7 @@ public class Video {
     @Column(nullable = false)
     private String url;
 
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Categoria categoria;
 
     public Video(CriarVideoDto dtoCriar, Categoria categoria){

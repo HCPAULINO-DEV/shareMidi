@@ -57,6 +57,7 @@ public class CategoriaService {
         } else {
             var categoria = buscarCategoria(id);
             categoriaRepository.delete(categoria);
+
         }
 
     }

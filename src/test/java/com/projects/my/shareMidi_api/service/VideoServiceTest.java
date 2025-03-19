@@ -53,13 +53,14 @@ class VideoServiceTest {
     }
 
     @Test
-    public void deveRetornarUmVideoCategoriaLivre() {
-        CriarVideoDto dto = new CriarVideoDto("Titulo", "Descricao", "Url", null);
+    public void deveRetornarUmaExcecaoIdNaoEncontradoAoBuscarVideo() {
+        Long id = 1L;
 
-        Categoria categoriaLivre = new Categoria(1L, "LIVRE", "VERDE", null);
-        BDDMockito.when(categoriaService.buscarCategoria(1L)).thenReturn(categoriaLivre);
+        BDDMockito.when(videoRepository.findById(id)).thenReturn(Optional.empty());
 
-        Assertions.assertDoesNotThrow(() -> videoService.criarVideo(dto));
+        RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () -> videoService.buscarVideo(id));
+
+        Assertions.assertEquals("Vídeo não encontrado com ID: " + id, exception.getMessage());
 
     }
 
